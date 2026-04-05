@@ -1,6 +1,6 @@
-# paper2card
+# Paper2card
 
-`paper2card` is a SvelteKit app for turning research paper content into design cards with help from a backend service and a user-provided Gemini API key.
+`Paper2card` is a SvelteKit app for turning research paper content into design cards with help from a backend service and a user-provided Gemini API key.
 
 The current flow is:
 
