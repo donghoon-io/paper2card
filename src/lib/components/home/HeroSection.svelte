@@ -1,5 +1,13 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	export let ctaHref: string;
+
+	const dispatch = createEventDispatcher<{ getstarted: void }>();
+
+	function handleGetStarted() {
+		dispatch('getstarted');
+	}
 </script>
 
 <section class="bg-gray-50">
@@ -24,6 +32,7 @@
 					class="block rounded-[0.65rem] bg-[#e5e7eb] px-8 py-3 text-md font-semibold text-[#1f2937] visited:text-[#1f2937] hover:bg-[#d1d5db] focus:outline-none sm:w-auto"
 					style="color: black"
 					href={ctaHref}
+					on:click|preventDefault={handleGetStarted}
 				>
 					Get started
 				</a>

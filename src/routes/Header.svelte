@@ -1,23 +1,12 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import favicon from "$lib/images/favicon.png"
+	import ApiKeyModal from '$lib/components/ApiKeyModal.svelte';
+	import favicon from "$lib/images/favicon.png";
 	import { api_key } from "$lib/js/store.js";
 	import { normalizeGeminiApiKey } from "$lib/js/toolkit.js";
 
 	let mobileMenuOpen = false;
 	let showApiKeyModal = false;
 	let tempApiKey = $api_key;
-
-	function maskedApiKey(apiKey) {
-		const trimmed = normalizeGeminiApiKey(apiKey);
-		if (!trimmed) {
-			return "";
-		}
-		if (trimmed.length <= 8) {
-			return trimmed;
-		}
-		return `${trimmed.slice(0, 4)}...${trimmed.slice(-4)}`;
-	}
 
 	function openApiKeyModal() {
 		tempApiKey = $api_key ?? "";
@@ -38,60 +27,19 @@
 		closeApiKeyModal();
 	}
 
-	function clearApiKey() {
-		if (typeof window !== "undefined") {
-			window.localStorage.removeItem("gemini_api_key");
-		}
-		$api_key = "";
-		tempApiKey = "";
-	}
-
-	function onKeyDown(event: KeyboardEvent) {
-		if (event.key === "Escape" && showApiKeyModal) {
-			closeApiKeyModal();
-		}
-	}
 </script>
 
-<svelte:window on:keydown={onKeyDown} />
-
-{#if showApiKeyModal}
-	<div
-		class="modal-overlay"
-		transition:fade={{ duration: 200 }}
-		on:click={closeApiKeyModal}
-		role="presentation"
-	>
-		<div class="modal-card" on:click|stopPropagation role="dialog" aria-modal="true" aria-labelledby="api-key-title">
-			<h3 id="api-key-title" class="modal-title">Manage API Key</h3>
-			<p class="modal-copy">
-				Enter or update your Gemini API key. This is required to run card generation. You can obtain one at
-				<a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer">Google AI Studio</a>.
-			</p>
-			<p class="modal-copy">
-				Current key:
-				<strong>{$api_key ? maskedApiKey($api_key) : "Not set"}</strong>
-			</p>
-
-			<div>
-				<label for="api-key-input" class="modal-label">Your API Key</label>
-				<input
-					type="password"
-					id="api-key-input"
-					bind:value={tempApiKey}
-					class="modal-input"
-					placeholder="Enter your Gemini API key"
-				/>
-			</div>
-
-			<div class="modal-actions">
-				<button type="button" class="secondary-button" on:click={clearApiKey}>Clear</button>
-				<button type="button" class="secondary-button" on:click={closeApiKeyModal}>Cancel</button>
-				<button type="button" class="primary-button" on:click={saveApiKey}>Save Key</button>
-			</div>
-		</div>
-	</div>
-{/if}
+<ApiKeyModal
+	open={showApiKeyModal}
+	bind:value={tempApiKey}
+	title="Manage API Key"
+	description="To generate a card, please enter your Gemini API key. This is required to access the generative AI models. You can obtain one at"
+	note="Note that Paper2card requires an API key with a paid quota tier, as it uses a text/image generation model."
+	inputPlaceholder="Enter your key here"
+	primaryLabel="Save Key"
+	on:close={closeApiKeyModal}
+	on:save={saveApiKey}
+/>
 
 <header class="bg-gray-50">
 	<nav class="header-nav" aria-label="Global">
@@ -218,90 +166,6 @@
 
 	.author-link:hover {
 		background: #d1d5db;
-	}
-
-	.modal-overlay {
-		position: fixed;
-		inset: 0;
-		z-index: 50;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 1rem;
-		background: rgba(17, 24, 39, 0.45);
-		backdrop-filter: blur(6px);
-	}
-
-	.modal-card {
-		width: 100%;
-		max-width: 32rem;
-		border-radius: 1rem;
-		background: #ffffff;
-		box-shadow: 0 24px 80px rgba(15, 23, 42, 0.22);
-		padding: 1.5rem;
-	}
-
-	.modal-title {
-		margin: 0 0 0.5rem 0;
-		font-size: 1.1rem;
-		font-weight: 700;
-		color: #111827;
-	}
-
-	.modal-copy {
-		margin: 0 0 0.9rem 0;
-		font-size: 0.92rem;
-		line-height: 1.5;
-		color: #4b5563;
-	}
-
-	.modal-copy a {
-		color: #111827;
-		text-decoration: underline;
-	}
-
-	.modal-label {
-		display: block;
-		margin-bottom: 0.4rem;
-		font-size: 0.9rem;
-		font-weight: 600;
-		color: #374151;
-	}
-
-	.modal-input {
-		width: 100%;
-		box-sizing: border-box;
-		padding: 0.8rem 0.9rem;
-		border: 1px solid #d1d5db;
-		border-radius: 0.75rem;
-		font-size: 0.95rem;
-	}
-
-	.modal-actions {
-		display: flex;
-		justify-content: flex-end;
-		gap: 0.75rem;
-		margin-top: 1.25rem;
-	}
-
-	.primary-button,
-	.secondary-button {
-		border: none;
-		border-radius: 0.7rem;
-		padding: 0.7rem 1rem;
-		font-size: 0.88rem;
-		font-weight: 700;
-		cursor: pointer;
-	}
-
-	.primary-button {
-		background: #111827;
-		color: #ffffff;
-	}
-
-	.secondary-button {
-		background: #e5e7eb;
-		color: #111827;
 	}
 
 	.mobile-menu {
