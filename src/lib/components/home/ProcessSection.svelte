@@ -108,16 +108,16 @@
 
 		{#each publications as publication}
 			<div class="w-full min-w-0 bg-white px-5 py-4 mb-4 border rounded-xl border-gray-300 box-border overflow-hidden">
-				<p class="mb-2 text-md font-medium text-gray-900">{publication.title}</p>
-				<p class="mb-2 text-md font-light text-gray-900">{publication.authors}</p>
-				<p class="text-md font-light text-gray-900 break-words">
+				<p class="mb-2 text-[0.92rem] font-medium leading-snug text-gray-900">{publication.title}</p>
+				<p class="mb-2 text-[0.82rem] font-light leading-snug text-gray-900">{publication.authors}</p>
+				<p class="text-[0.82rem] font-light text-gray-900 break-words">
 					<span class="font-normal">{publication.venue}</span>
 					<a
 						target="_blank"
 						rel="noopener noreferrer"
 						href={publication.pdfHref}
 						style="color: black;"
-						class="rounded bg-gray-200 px-2 py-1 text-xs font-regular text-gray-800 visited:text-gray-800 hover:bg-gray-400 focus:outline-none mx-1 whitespace-nowrap"
+						class="rounded bg-gray-200 px-2 py-1 text-[0.7rem] font-regular text-gray-800 visited:text-gray-800 hover:bg-gray-400 focus:outline-none mx-1 whitespace-nowrap"
 					>
 						PDF
 					</a>
@@ -125,7 +125,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 						href={publication.projectHref}
-						class="rounded bg-gray-200 px-2 py-1 text-xs font-regular visited:text-gray-800 hover:bg-gray-400 focus:outline-none whitespace-nowrap"
+						class="rounded bg-gray-200 px-2 py-1 text-[0.7rem] font-regular visited:text-gray-800 hover:bg-gray-400 focus:outline-none whitespace-nowrap"
 						style="color: black;"
 					>
 						Project website
