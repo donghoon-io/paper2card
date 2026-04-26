@@ -68,8 +68,8 @@
 	.scroller {
 		width: 100vw;
 		overflow: hidden;
-		-webkit-mask: linear-gradient(90deg, white 0%, white 84%, transparent 100%);
-		mask: linear-gradient(90deg, white 0%, white 84%, transparent 100%);
+		-webkit-mask: linear-gradient(90deg, transparent 0%, white 8%, white 92%, transparent 100%);
+		mask: linear-gradient(90deg, transparent 0%, white 8%, white 92%, transparent 100%);
 		--_animation-direction: reverse;
 		--_animation-duration: 40s;
 	}
